@@ -1,0 +1,18 @@
+server:
+  port: 7002
+
+eureka:
+  instance:
+    # 单机版配置hostname: localhost #eureka服务端的实例名称
+    hostname: eureka7002.com  #在hosts文件中 映射了
+  client:
+    register-with-eureka: false #false表示不向注册中心注册自己
+    fetch-registry: false  #false表示自己端就是注册中心，职责就是维护服务实例，并不需要检索服务
+    service-url:
+      #defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/ #设置与Eureka server交互的地址查询服务以及注册服务都需要依赖这个地址:
+      defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7003.com:7003/eureka/
+    #server:
+    #关闭保护机制，以确保注册中心将不可用的实例正确剔除
+    #enable-self-preservation: false
+    #（代表是5秒，单位是毫秒,清理失效服务的间隔 ）
+    # eviction-interval-timer-in-ms: 5000

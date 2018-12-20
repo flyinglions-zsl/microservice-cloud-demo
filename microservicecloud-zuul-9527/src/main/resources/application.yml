@@ -1,0 +1,35 @@
+server:
+  port: 9527
+
+
+spring:
+  application:
+    name: microservicecloud-zuul-gateway  #微服务对外暴露的名字
+
+
+eureka:
+      #服务提供者注册进Eureka服务列表
+    client:
+      service-url:
+        # 有Eureka集群时
+        defaultZone: http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka,http://eureka7003.com:7003/eureka
+      instance:
+        instance-id: gateway-9527.com #自定义服务名称信息
+        prefer-ip-address: true #访问路径可以显示ip地址
+
+
+info:
+  app.name: zsl-microservicecloud
+  company.name: www.zsl.com
+  build.artifactId: $project.artifactId$
+  build.version: $project.version$
+
+
+#没配置zuul代理之前访问方式：http://myzuul.com：9527/mivroservicecloud-dept/dept/get/1
+#配置代理后：http://myzuul.com:9527/mydept/dept/get/1，且关闭原来的访问路径
+zuul:
+  routes:
+    mydept.servceId: microservicecloud-dept
+    mydept.path: /mydept/**
+  ignored-services: microservicecloud-dept  #关闭原来的访问路径（忽略真实服务名）如屏蔽所有真实名： “*” 配置
+  prefix: /zsl #统一访问前缀名

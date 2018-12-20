@@ -1,0 +1,1 @@
+此Hystrix是copy 8001，只修了yml中的instance-id: microservicecloud-dept8001-Hystrix #自定义Hystrix服务名称信息

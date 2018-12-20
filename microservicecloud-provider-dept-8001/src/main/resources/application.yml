@@ -1,0 +1,51 @@
+server:
+  port: 8001
+
+mybatis:
+  config-location: classpath:mybatis/mybatisConfig.xml
+  # po 路径
+  type-aliases-package: com.zsl.springcloud.entity
+  mapper-locations: classpath:mybatis/mappers/*.xml
+spring:
+  application:
+    name: microservicecloud-dept  #微服务对外暴露的名字
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: org.gjt.mm.mysql.Driver
+    username: root
+    password: root
+    url: jdbc:mysql://localhost:3306/cloudDB01?characterEncoding=utf-8
+    dbcp2:
+      #数据库连接池的最小维持连接数
+      min-idle: 5
+      #初始化连接数
+      initial-size: 5
+      #最大连接数
+      max-total: 5
+      #等待连接获取的最大超时时间
+      max-wait-millis: 200
+
+eureka:
+  #服务提供者注册进Eureka服务列表
+  client:
+    service-url:
+      # 有Eureka集群时
+      defaultZone: http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka,http://eureka7003.com:7003/eureka
+         #--单机版defaultZone: http://localhost:7001/eureka
+
+  instance:
+    instance-id: microservicecloud-dept8001 #自定义服务名称信息
+    prefer-ip-address: true #访问路径可以显示ip地址
+    # 心跳检测检测与续约时间
+    # 测试时将值设置设置小些，保证服务关闭后注册中心能及时踢出服务
+    # 配置说明
+    #　　lease-renewal-interval-in-seconds 每间隔10s，向服务端发送一次心跳，证明自己依然”存活“
+    #　　lease-expiration-duration-in-seconds  告诉服务端，如果我20s之内没有给你发心跳，就代表我“死”了，将我踢出掉。
+    lease-renewal-interval-in-seconds: 10
+    lease-expiration-duration-in-seconds: 20
+
+info:
+  app.name: zsl-microservicecloud
+  company.name: www.zsl.com
+  build.artifactId: $project.artifactId$
+  build.version: $project.version$
